@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.todo-wrap {
+  background-color: #ffeeee;
+  padding: 20px;
+}
+.todo-list {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 48px;
+}
+.todo-item {
+  display: flex;
+  gap: 24px;
+}
