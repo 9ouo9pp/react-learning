@@ -1,62 +1,58 @@
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
 import { useState } from 'react';
-import './css/calendar.css'
-
-const MyCalendar = () => {
-  // 현재 날짜
-  const [date, setDate] = useState(new Date());
-  // moment 라이브러리를 캘린더와 연결
-  const localizer = momentLocalizer(moment);
-
-  // 캘린더에 표시할 이벤트 목록
-  const myEventsList = [
-    {
-      // 이벤트 시작 날짜
-      start: new Date(2025, 8, 20),
-      // 이벤트 끝 날짜
-      end: new Date(2025, 8, 21),
-      // 이벤트 제목
-      title: "오늘의 할 일",
-    }
-  ]
-
-
-  // 다음/이전 달 이동 핸들러
-  // 'onNavigate'가 작동하면 라이브러리가 계산한 'newDate'값을 'handleNavigate'에 전달
-  // 'newDate'는 라이브러리가 '월'을 기준으로 다음 달 혹은 이전 달의 시작 날짜를 자동으로 계산
-  const handleNavigate = (newDate) => {
-    setDate(newDate);
-  }
-
-  return(
-    <div style={{height: '500px'}}>
-      <Calendar
-        // 날짜 처리 로직 연결
-        localizer={localizer}
-        // 이벤트 목록 전달
-        events={myEventsList}
-        // 현재 보여줄 날짜를 상태로 제어
-        date={date}
-        // 이전/ 다음달 핸들러 연결
-        onNavigate={handleNavigate}
-        // 이벤트 객체에서 시작날짜를 나타내는 속성 이름 지정
-        startAccessor= "start"
-        // 이벤트 객체에서 끝날짜를 나타내는 속성 이름 지정
-        endAccessor= "end"
-        style={
-          {height: '500px', width: '500px'}
-        }
-      />
-    </div>
-  );
-};
+import Todo from './component/todo';
+import MyCalendar from './component/MyCalendar';
+import './css/calendar.css';
 
 function App() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  // todoItem 상태를 App 컴포넌트로 옮겼습니다.
+  const [todoItem, setTodoItem] = useState({
+    '2025-09-05': [
+      { text: "1번 할 일", done: false }, 
+      { text: "2번 할 일", done: false },
+      { text: "3번 할 일", done: false }
+    ], 
+    '2025-09-10': [
+      { text: "4번 할 일", done: false }, 
+      { text: "5번 할 일", done: false },
+      { text: "6번 할 일", done: false }
+    ]
+  });
+
+  const handleSelectSlot = (slotInfo) => {
+    setSelectedDate(slotInfo.start);
+  };
+  
+  const handleNavigate = (newDate) => {
+    setSelectedDate(newDate);
+  };
+  
+  // todoItem 객체를 캘린더 이벤트 배열로 변환합니다.
+  const myEventsList = Object.entries(todoItem).map(([date, todos]) => {
+    // 1. todos 배열에서 text만 뽑아내서 새로운 배열을 만듭니다.
+    const title = todos.map(todo => todo.text).join('\n');
+    
+    // 2. 날짜와 합쳐진 제목을 가진 이벤트 객체를 반환합니다.
+    return {
+      start: new Date(date),
+      end: new Date(date),
+      title: title
+    };
+  });
+
   return (
-    <div>
+    <div className='wrap'>
       <h1>리액트 캘린더</h1>
-      <MyCalendar />
+      <div className="content">
+        <MyCalendar 
+            date={selectedDate}
+            onNavigate={handleNavigate}
+            onSelectSlot={handleSelectSlot}
+            events={myEventsList} // 동적으로 생성된 이벤트 목록을 전달합니다.
+        />
+        <Todo selectedDate={selectedDate} todoItem={todoItem} setTodoItem={setTodoItem}/>
+      </div>
     </div>
   );
 }
