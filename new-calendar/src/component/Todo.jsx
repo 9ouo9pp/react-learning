@@ -34,6 +34,20 @@ function Todo({ selectedDate, todoItem, setTodoItem }) {
     }
   };
 
+  // 할 일 항목 삭제
+  const removeTodo = (indexToRemove) => {
+    // todoitem 복사본
+    const newTodoItems = {...todoItem};
+
+    if (newTodoItems[formattedDate]) {
+      // filter를 사용해 삭제항목 제외 새로운 배열만듬
+      const updateTodos = newTodoItems[formattedDate].filter((_, index) => index !== indexToRemove);
+      newTodoItems[formattedDate] = updateTodos;
+      // 변경된 상태로 업데이트
+      setTodoItem(newTodoItems);
+    }
+  };
+
   return (
     <div className="todo-wrap">
       <h2>TO DO LIST</h2>
@@ -43,16 +57,21 @@ function Todo({ selectedDate, todoItem, setTodoItem }) {
             <span style={{ textDecoration: item.done ? "line-through" : "none" }}>
               {item.text}
             </span>
-            <input
-              type="checkbox"
-              className='check'
-              checked={item.done}
-              onChange={() => handleCheck(index)}
-            />
+            <div className="todo-list-btns">
+              {/* 체크 */}
+              <input
+                type="checkbox"
+                className='check'
+                checked={item.done}
+                onChange={() => handleCheck(index)}
+                />
+              {/* 할 일 제거 */}
+              <button className='todo-btn-delete' onClick={() => removeTodo(index)}>X</button>
+            </div>
           </div>
         ))}
         <div className="todo-add-wrap">
-          <p>할 일 추가</p>
+          {/* <p>할 일 추가</p> */}
           <div className="todo-add">
             <input
               className='todo-add-input'

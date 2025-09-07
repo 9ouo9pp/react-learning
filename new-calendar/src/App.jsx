@@ -2,9 +2,17 @@ import { useState } from 'react';
 import Todo from './component/todo';
 import MyCalendar from './component/MyCalendar';
 import './css/calendar.css';
+import Star from './component/Star';
+import catImage from './img/cat.png';
 
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   // todoItem 상태를 App 컴포넌트로 옮겼습니다.
   const [todoItem, setTodoItem] = useState({
@@ -26,6 +34,8 @@ function App() {
   
   const handleNavigate = (newDate) => {
     setSelectedDate(newDate);
+    setCurrentMonth(newDate.getMonth() + 1);
+    setCurrentYear(newDate.getFullYear());
   };
   
   // todoItem 객체를 캘린더 이벤트 배열로 변환합니다.
@@ -43,7 +53,9 @@ function App() {
 
   return (
     <div className='wrap'>
-      <h1>리액트 캘린더</h1>
+      <Star />
+      <h1>{currentYear}<span>{monthNames[currentMonth - 1]}</span></h1>
+      {/* <h3>{currentMonth}</h3> */}
       <div className="content">
         <MyCalendar 
             date={selectedDate}
@@ -52,6 +64,11 @@ function App() {
             events={myEventsList} // 동적으로 생성된 이벤트 목록을 전달합니다.
         />
         <Todo selectedDate={selectedDate} todoItem={todoItem} setTodoItem={setTodoItem}/>
+        <div className="cat">
+          <img src={catImage} alt="cat" />
+          <img src={catImage} alt="cat" />
+          <img src={catImage} alt="cat" />
+        </div>
       </div>
     </div>
   );

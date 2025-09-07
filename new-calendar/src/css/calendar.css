@@ -1,17 +1,65 @@
 @charset "UTF-8";
+@font-face {
+  font-family: "RoundedFixedsys";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff")
+    format("woff");
+  font-weight: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  font-size: 16px;
+  font-family: "RoundedFixedsys";
+  letter-spacing: -3.2%;
+}
+button {
+}
+body {
+  display: flex;
+  justify-content: center;
+}
 .wrap {
   position: relative;
   width: 100%;
 }
+/* header */
+h1 {
+  position: relative;
+  /* width: 20vw; */
+  /* height: 4vw; */
+  font-size: 64px;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+/* cat */
+.cat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
 /* calendar, todo list */
 .content {
   position: relative;
   width: 1400px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  background-color: rebeccapurple;
+  /* background-color: rebeccapurple; */
 }
 /* 전체 캘린더 */
 .calendar-wrap {
@@ -101,7 +149,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-off-range-bg {
-  background: #e6e6e6;
+  background: #2e2e2e;
 }
 
 .rbc-header {
@@ -180,10 +228,11 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-today {
-  background-color: #eaf6ff;
+  background-color: #364a5a;
 }
 
 .rbc-toolbar {
+  height: 2.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -191,7 +240,7 @@ button.rbc-input::-moz-focus-inner {
   flex-wrap: wrap;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: flex-start;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -205,9 +254,10 @@ button.rbc-input::-moz-focus-inner {
   flex-grow: 1;
   padding: 0 10px;
   text-align: center;
+  display: none;
 }
 .rbc-toolbar button {
-  color: #373a3c;
+  color: #aaa;
   display: inline-block;
   margin: 0;
   text-align: center;
@@ -242,7 +292,7 @@ button.rbc-input::-moz-focus-inner {
   border-color: #adadad;
 }
 .rbc-toolbar button:hover {
-  color: #373a3c;
+  color: #eee;
   cursor: pointer;
   background-color: #e6e6e6;
   border-color: #adadad;
